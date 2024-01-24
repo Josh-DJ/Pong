@@ -11,6 +11,7 @@ class Paddle(Turtle):
         self.color("white")
         self.shapesize(stretch_wid= 3, stretch_len=.5)
         self.goto(position)
+        self.score = 0
 
     def up(self):
         if self.ycor() < 260:
