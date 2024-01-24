@@ -1,6 +1,7 @@
 from turtle import Screen
 from paddle import Paddle
 from ball import Ball
+from scoreboard import Scoreboard
 import time
 
 SCREEN_WIDTH = 800
@@ -16,6 +17,7 @@ screen.tracer(0)
 l_paddle = Paddle((-350, 0))
 r_paddle = Paddle((350, 0))
 ball = Ball()
+board = Scoreboard()
 
 screen.listen()
 screen.onkeypress(key="Up", fun=l_paddle.up)
@@ -25,9 +27,10 @@ screen.onkeypress(key="s", fun=r_paddle.down)
 
 game_on = True
 while game_on:
-    time.sleep(0.1)
+    time.sleep(ball.move_speed)
     screen.update()
     ball.move()
+    board.update_point()
     # Collision with top/bottom wall
     if ball.ycor() > 290 or ball.ycor() < -290:
         #Bounce ball
@@ -43,10 +46,11 @@ while game_on:
         # Left paddle gets a point
         l_paddle.score += 1
         ball.reset_position()
+        board.l_point(l_paddle.score)
 
     elif ball.xcor() < -390:
         # Right paddle gets a point
         r_paddle.score += 1
         ball.reset_position()
-
+        board.r_point(r_paddle.score)
 screen.exitonclick()
